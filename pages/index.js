@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import appConfig from '../config.json';
@@ -21,7 +21,7 @@ function Title(props) {
 }
 
 export default function PaginaInicial() {
-    const [username, setUsername] = React.useState('cmartinellicm');
+    const [username, setUsername] = useState('cmartinellicm');
     const roteamento = useRouter();
 
     return (
@@ -74,7 +74,7 @@ export default function PaginaInicial() {
                             marginBottom: '32px',
                         }}
                     >
-                        <Title tag='h2'>Boas vindas de volta!</Title>
+                        <Title tag='h2'>Converse com um(a) Dev!</Title>
                         <Text
                             variant='body3'
                             styleSheet={{
@@ -87,9 +87,8 @@ export default function PaginaInicial() {
 
                         <TextField
                             value={username}
-                            onChange={function (event) {
-                                const valor = event.target.value;
-                                setUsername(valor);
+                            onChange={(event) => {
+                                setUsername(event.target.value);
                             }}
                             fullWidth
                             textFieldColors={{
