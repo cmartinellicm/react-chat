@@ -20,8 +20,15 @@ function Title(props) {
     );
 }
 
+function UsernameIsValid(username) {
+    let isValid = false;
+    if (username.length > 1) isValid = true;
+
+    return isValid;
+}
+
 export default function PaginaInicial() {
-    const [username, setUsername] = useState('cmartinellicm');
+    const [username, setUsername] = useState('');
     const roteamento = useRouter();
 
     return (
@@ -89,6 +96,7 @@ export default function PaginaInicial() {
                             onChange={(event) => {
                                 setUsername(event.target.value);
                             }}
+                            placeholder='Insert your GitHub user name...'
                             fullWidth
                             textFieldColors={{
                                 neutral: {
@@ -105,7 +113,7 @@ export default function PaginaInicial() {
                         />
                         <Button
                             type='submit'
-                            label='Entrar'
+                            label='Login'
                             fullWidth
                             buttonColors={{
                                 contrastColor:
@@ -137,25 +145,31 @@ export default function PaginaInicial() {
                             minHeight: '240px',
                         }}
                     >
-                        <Image
-                            styleSheet={{
-                                borderRadius: '50%',
-                                marginBottom: '16px',
-                            }}
-                            src={`https://github.com/${username}.png`}
-                        />
-                        <Text
-                            variant='body4'
-                            styleSheet={{
-                                color: appConfig.theme.colors.neutrals[200],
-                                backgroundColor:
-                                    appConfig.theme.colors.neutrals[900],
-                                padding: '3px 10px',
-                                borderRadius: '1000px',
-                            }}
-                        >
-                            {username}
-                        </Text>
+                        {UsernameIsValid(username) && (
+                            <>
+                                <Image
+                                    styleSheet={{
+                                        borderRadius: '50%',
+                                        marginBottom: '16px',
+                                    }}
+                                    src={`https://github.com/${username}.png`}
+                                />
+                                <Text
+                                    variant='body4'
+                                    styleSheet={{
+                                        color: appConfig.theme.colors
+                                            .neutrals[200],
+                                        backgroundColor:
+                                            appConfig.theme.colors
+                                                .neutrals[900],
+                                        padding: '3px 10px',
+                                        borderRadius: '1000px',
+                                    }}
+                                >
+                                    {username}
+                                </Text>
+                            </>
+                        )}
                     </Box>
                     {/* Photo Area */}
                 </Box>
