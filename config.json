@@ -1,6 +1,7 @@
 {
-    "name": "Chat - Imersão React",
+    "name": "Aluracord Project",
     "theme": {
+        "backgroundImageURL": "https://cdn.pixabay.com/photo/2015/10/27/14/40/programming-1009134_1280.jpg",
         "colors": {
             "primary": {
                 "050": "#EFE3F2",

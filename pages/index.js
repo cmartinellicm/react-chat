@@ -31,9 +31,8 @@ export default function PaginaInicial() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: appConfig.theme.colors.primary[300],
-                    backgroundImage:
-                        'url(https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)',
+                    backgroundColor: appConfig.theme.colors.primary[600],
+                    backgroundImage: `url(${appConfig.theme.backgroundImageURL})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     backgroundBlendMode: 'multiply',
@@ -74,7 +73,7 @@ export default function PaginaInicial() {
                             marginBottom: '32px',
                         }}
                     >
-                        <Title tag='h2'>Converse com um(a) Dev!</Title>
+                        <Title tag='h2'>Talk to a Developer!</Title>
                         <Text
                             variant='body3'
                             styleSheet={{
