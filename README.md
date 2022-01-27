@@ -16,6 +16,7 @@ Implementada uma aplicação para interação de usuário via mensagens de texto
 -   Utilização do hook useState para atualização de variáveis;
 -   Utilização de eventos onSubmit e onClick no React;
 -   Utilização do useRouter para redirecionamento de rotas;
+-   Integração com Supabase para guardar mensagens do chat em um banco de dados;
 
 ## Modificações implementadas
 

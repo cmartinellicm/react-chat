@@ -37,17 +37,17 @@ export default function PaginaInicial() {
     });
 
     useEffect(() => {
-        fetch(`https://api.github.com/users/${username}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setUserdata({
-                    name: data.name,
-                    location: data.location,
+        if (UsernameIsValid(username)) {
+            fetch(`https://api.github.com/users/${username}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    setUserdata({
+                        name: data.name,
+                        location: data.location,
+                    });
                 });
-            });
+        }
     }, [username]);
-
-    function fetchUserData(username) {}
 
     return (
         <>
@@ -172,7 +172,7 @@ export default function PaginaInicial() {
                                     }}
                                     src={`https://github.com/${username}.png`}
                                 />
-                                <Text
+                                {/* <Text
                                     variant='body4'
                                     styleSheet={{
                                         color: appConfig.theme.colors
@@ -185,18 +185,17 @@ export default function PaginaInicial() {
                                     }}
                                 >
                                     {username}
-                                </Text>
+                                </Text> */}
 
-                                {fetchUserData(username)}
                                 <Text
                                     variant='body4'
                                     styleSheet={{
                                         color: appConfig.theme.colors
                                             .neutrals[200],
                                         backgroundColor:
-                                            appConfig.theme.colors
-                                                .neutrals[900],
+                                            appConfig.theme.colors.primary[900],
                                         padding: '3px 10px',
+                                        marginBottom: '5px',
                                         borderRadius: '1000px',
                                     }}
                                 >
@@ -208,8 +207,7 @@ export default function PaginaInicial() {
                                         color: appConfig.theme.colors
                                             .neutrals[200],
                                         backgroundColor:
-                                            appConfig.theme.colors
-                                                .neutrals[900],
+                                            appConfig.theme.colors.primary[900],
                                         padding: '3px 10px',
                                         borderRadius: '1000px',
                                     }}
