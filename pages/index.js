@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import appConfig from '../config.json';
@@ -30,6 +30,24 @@ function UsernameIsValid(username) {
 export default function PaginaInicial() {
     const [username, setUsername] = useState('');
     const roteamento = useRouter();
+
+    const [userdata, setUserdata] = useState({
+        name: '',
+        location: '',
+    });
+
+    useEffect(() => {
+        fetch(`https://api.github.com/users/${username}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setUserdata({
+                    name: data.name,
+                    location: data.location,
+                });
+            });
+    }, [username]);
+
+    function fetchUserData(username) {}
 
     return (
         <>
@@ -167,6 +185,36 @@ export default function PaginaInicial() {
                                     }}
                                 >
                                     {username}
+                                </Text>
+
+                                {fetchUserData(username)}
+                                <Text
+                                    variant='body4'
+                                    styleSheet={{
+                                        color: appConfig.theme.colors
+                                            .neutrals[200],
+                                        backgroundColor:
+                                            appConfig.theme.colors
+                                                .neutrals[900],
+                                        padding: '3px 10px',
+                                        borderRadius: '1000px',
+                                    }}
+                                >
+                                    {userdata.name}
+                                </Text>
+                                <Text
+                                    variant='body4'
+                                    styleSheet={{
+                                        color: appConfig.theme.colors
+                                            .neutrals[200],
+                                        backgroundColor:
+                                            appConfig.theme.colors
+                                                .neutrals[900],
+                                        padding: '3px 10px',
+                                        borderRadius: '1000px',
+                                    }}
+                                >
+                                    {userdata.location}
                                 </Text>
                             </>
                         )}

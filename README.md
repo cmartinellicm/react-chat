@@ -21,3 +21,4 @@ Implementada uma aplicação para interação de usuário via mensagens de texto
 
 -   Customização de tema, com alteração de cores e background
 -   Validação de campo: exibe imagem e username na tela de login apenas quando são inseridos pelo menos 2 caracteres
+-   Exibição de nome e localização do usuário na tela de login, buscando informação na API do GitHub
