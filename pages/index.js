@@ -106,7 +106,9 @@ export default function PaginaInicial() {
                             marginBottom: '32px',
                         }}
                     >
-                        <Title tag='h2'>Talk to a Developer!</Title>
+                        <Title tag='h2'>
+                            Chat with the developer community!
+                        </Title>
                         <Text
                             variant='body3'
                             styleSheet={{
