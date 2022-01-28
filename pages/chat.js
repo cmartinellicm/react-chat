@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
-import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js';
+import appConfig from '../config.json';
+import { ButtonSendSticker } from '../src/components/ButtonSendSticker';
 
 const SUPABASE_ANON_KEY =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzI4OTQxMCwiZXhwIjoxOTU4ODY1NDEwfQ.Gn_Xb6qxfZOhY2iKSFgbpBwz82Wj4T1OVdSOds_KICw';
@@ -9,6 +11,8 @@ const SUPABASE_URL = 'https://rmwmrahngxyndwfklnch.supabase.co';
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function ChatPage() {
+    const roteamento = useRouter();
+    const usuarioLogado = roteamento.query.username;
     const [mensagem, setMensagem] = useState();
     const [listaDeMensagens, setListaDeMensagens] = useState([]);
 
@@ -18,14 +22,13 @@ export default function ChatPage() {
             .select('*')
             .order('created_at', { ascending: false })
             .then(({ data }) => {
-                console.log('Dados da consulta:', data);
                 setListaDeMensagens(data);
             });
     }, []);
 
     function handleNovaMensagem(novaMensagem) {
         const mensagem = {
-            de: 'vanessametonini',
+            de: usuarioLogado,
             texto: novaMensagem,
         };
 
@@ -114,6 +117,11 @@ export default function ChatPage() {
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                         />
+                        <ButtonSendSticker
+                            onStickerClick={(sticker) => {
+                                handleNovaMensagem(':sticker:' + sticker);
+                            }}
+                        />
                     </Box>
                 </Box>
             </Box>
@@ -200,7 +208,13 @@ function MessageList(props) {
                                 {new Date().toLocaleDateString()}
                             </Text>
                         </Box>
-                        {mensagem.texto}
+                        {mensagem.texto.startsWith(':sticker:') ? (
+                            <Image
+                                src={mensagem.texto.replace(':sticker:', '')}
+                            />
+                        ) : (
+                            mensagem.texto
+                        )}
                     </Text>
                 );
             })}
