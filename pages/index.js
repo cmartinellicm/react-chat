@@ -20,32 +20,40 @@ function Title(props) {
     );
 }
 
-function UsernameIsValid(username) {
-    let isValid = false;
-    if (username.length > 1) isValid = true;
-
-    return isValid;
-}
-
 export default function PaginaInicial() {
-    const [username, setUsername] = useState('');
     const roteamento = useRouter();
-
-    const [userdata, setUserdata] = useState({
-        name: '',
+    const [username, setUsername] = useState('');
+    const [userIsValid, setUserIsValid] = useState(false);
+    const [userDetails, setUserDetails] = useState({
+        name: 'Invalid user',
         location: '',
     });
 
     useEffect(() => {
-        if (UsernameIsValid(username)) {
-            fetch(`https://api.github.com/users/${username}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    setUserdata({
-                        name: data.name,
-                        location: data.location,
-                    });
-                });
+        if (username.length > 1) {
+            fetch(`https://api.github.com/users/${username}`).then(
+                (response) => {
+                    if (response.status !== 200) {
+                        setUserIsValid(false);
+
+                        setUserDetails({
+                            name: 'Invalid user',
+                            location: '',
+                        });
+                    } else {
+                        response.json().then((data) => {
+                            setUserIsValid(true);
+
+                            setUserDetails({
+                                name: data.name,
+                                location: data.location,
+                            });
+                        });
+                    }
+                }
+            );
+        } else {
+            setUserIsValid(false);
         }
     }, [username]);
 
@@ -163,58 +171,46 @@ export default function PaginaInicial() {
                             minHeight: '240px',
                         }}
                     >
-                        {UsernameIsValid(username) && (
-                            <>
-                                <Image
-                                    styleSheet={{
-                                        borderRadius: '50%',
-                                        marginBottom: '16px',
-                                    }}
-                                    src={`https://github.com/${username}.png`}
-                                />
-                                {/* <Text
-                                    variant='body4'
-                                    styleSheet={{
-                                        color: appConfig.theme.colors
-                                            .neutrals[200],
-                                        backgroundColor:
-                                            appConfig.theme.colors
-                                                .neutrals[900],
-                                        padding: '3px 10px',
-                                        borderRadius: '1000px',
-                                    }}
-                                >
-                                    {username}
-                                </Text> */}
+                        {userIsValid && (
+                            <Image
+                                styleSheet={{
+                                    borderRadius: '50%',
+                                    marginBottom: '16px',
+                                }}
+                                src={
+                                    userIsValid &&
+                                    `https://github.com/${username}.png`
+                                }
+                            />
+                        )}
 
-                                <Text
-                                    variant='body4'
-                                    styleSheet={{
-                                        color: appConfig.theme.colors
-                                            .neutrals[200],
-                                        backgroundColor:
-                                            appConfig.theme.colors.primary[900],
-                                        padding: '3px 10px',
-                                        marginBottom: '5px',
-                                        borderRadius: '1000px',
-                                    }}
-                                >
-                                    {userdata.name}
-                                </Text>
-                                <Text
-                                    variant='body4'
-                                    styleSheet={{
-                                        color: appConfig.theme.colors
-                                            .neutrals[200],
-                                        backgroundColor:
-                                            appConfig.theme.colors.primary[900],
-                                        padding: '3px 10px',
-                                        borderRadius: '1000px',
-                                    }}
-                                >
-                                    {userdata.location}
-                                </Text>
-                            </>
+                        <Text
+                            variant='body4'
+                            styleSheet={{
+                                color: appConfig.theme.colors.neutrals[200],
+                                backgroundColor:
+                                    appConfig.theme.colors.primary[900],
+                                padding: '3px 10px',
+                                marginBottom: '5px',
+                                borderRadius: '1000px',
+                            }}
+                        >
+                            {userDetails.name}
+                        </Text>
+
+                        {userDetails.location && (
+                            <Text
+                                variant='body4'
+                                styleSheet={{
+                                    color: appConfig.theme.colors.neutrals[200],
+                                    backgroundColor:
+                                        appConfig.theme.colors.primary[900],
+                                    padding: '3px 10px',
+                                    borderRadius: '1000px',
+                                }}
+                            >
+                                {userDetails.location}
+                            </Text>
                         )}
                     </Box>
                     {/* Photo Area */}
