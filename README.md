@@ -18,6 +18,7 @@ Implementada uma aplicação para interação de usuário via mensagens de texto
 -   Utilização do useRouter para redirecionamento de rotas;
 -   Integração com Supabase para guardar mensagens do chat em um banco de dados;
 -   Implementação de uso de stickers nas mensagens;
+-   Atualização das mensagens em tempo real com o banco de dados.
 
 ## Modificações implementadas
 
